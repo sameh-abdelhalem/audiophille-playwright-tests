@@ -22,4 +22,32 @@ test.describe("Homepage", () => {
     await expect(homePage.earphonesLink).toBeEnabled();
     await expect(homePage.earphonesLink).toHaveText("EARPHONES");
   });
+  test("Verify hero section and See Product button", async ({ page }) => {
+    const homePage = new HomePage(page);
+    await expect(homePage.heroSection).toBeVisible();
+    await expect(homePage.seeProductButton).toBeVisible();
+    await expect(homePage.seeProductButton).toBeEnabled();
+  });
+
+  test("Verify category cards are visible and clickable", async ({ page }) => {
+    const homePage = new HomePage(page);
+    await expect(homePage.categoryCards.nth(0)).toBeVisible();
+    await expect(homePage.categoryCards.nth(1)).toBeVisible();
+    await expect(homePage.categoryCards.nth(2)).toBeVisible();
+    await homePage.categoryCards.nth(0).click();
+    await expect(page).toHaveURL(/.*headphones.*/);
+    await page.goBack();
+    await homePage.categoryCards.nth(1).click();
+    await expect(page).toHaveURL(/.*speakers.*/);
+    await page.goBack();
+    await homePage.categoryCards.nth(2).click();
+    await expect(page).toHaveURL(/.*earphones.*/);
+  });
+
+  test("Verify cart icon and footer visibility", async ({ page }) => {
+    const homePage = new HomePage(page);
+    await expect(homePage.cartIcon).toBeVisible();
+    await expect(homePage.cartIcon).toBeEnabled();
+    await expect(homePage.footer).toBeVisible();
+  });
 });
