@@ -8,10 +8,13 @@ export class BasePage {
   }
 
   async goto(path: string = "/") {
-    await this.page.goto(path);
+    await this.page.goto(`audiophille-ecommerce${path}`);
   }
 
   async getTitle() {
     return this.page.title();
+  }
+  async navigateToCategory(category: "Headphones" | "Speakers" | "Earphones") {
+    await this.page.click(`text=${category}`);
   }
 }
