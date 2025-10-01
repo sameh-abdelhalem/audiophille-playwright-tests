@@ -2,15 +2,11 @@ import { Page, Locator } from "@playwright/test";
 import { BasePage } from "./BasePage";
 
 export class CategoryPage extends BasePage {
-  readonly headphonesLink: Locator;
-  readonly speakersLink: Locator;
-  readonly earphonesLink: Locator;
+  readonly categoryTitle: Locator;
 
   constructor(page: Page) {
     super(page);
-    this.headphonesLink = page.locator("text=Headphones");
-    this.speakersLink = page.locator("text=Speakers");
-    this.earphonesLink = page.locator("text=Earphones");
+    this.categoryTitle = page.locator("h2").first();
   }
 
   async navigateToCategory(category: "Headphones" | "Speakers" | "Earphones") {
