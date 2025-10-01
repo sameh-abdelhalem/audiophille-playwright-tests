@@ -42,7 +42,7 @@ test.describe("Audiophille E-Commerce - Navigation", () => {
     await expect(categoryPage.categoryTitle).toBeVisible();
     await expect(categoryPage.firstProduct).toBeVisible();
     await expect(
-      categoryPage.firstProduct.getByRole("button", { name: /See Product/i })
+      categoryPage.firstProduct.getByRole("button", { name: /see product/i })
     ).toBeVisible();
     await expect(categoryPage.firstProductTitle).toHaveText(
       "YX1 Wireless Earphones"
@@ -55,6 +55,16 @@ test.describe("Audiophille E-Commerce - Navigation", () => {
     await homePage.headphonesLink.click();
     await expect(page).toHaveURL(/.*headphones.*/);
     await homePage.homeLink.click();
+    await expect(page).toHaveURL("/audiophille-ecommerce");
+    await expect(homePage.heroSection).toBeVisible();
+  });
+  test("should navigate to Home page when logo is clicked", async ({
+    page,
+  }) => {
+    const homePage = new HomePage(page);
+    await homePage.speakersLink.click();
+    await expect(page).toHaveURL(/.*speakers.*/);
+    await homePage.logo.click();
     await expect(page).toHaveURL("/audiophille-ecommerce");
     await expect(homePage.heroSection).toBeVisible();
   });

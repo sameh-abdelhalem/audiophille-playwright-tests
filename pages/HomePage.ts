@@ -29,7 +29,9 @@ export class HomePage extends BasePage {
       .getByRole("link", { name: "Earphones" });
     this.homeLink = page.locator("header").getByRole("link", { name: "Home" });
     this.heroSection = page.locator(".SecondaryNavigation_hero__XtHd1");
-    this.seeProductButton = page.getByRole("button", { name: /See Product/i });
+    this.seeProductButton = page
+      .locator(".SecondaryNavigation_hero__XtHd1")
+      .getByRole("button", { name: /see product/i });
     this.categoryCards = page
       .locator(".ProductCategories_products__esqWM")
       .locator("a");
