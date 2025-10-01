@@ -13,6 +13,12 @@ test.describe("Audiophille E-Commerce - Navigation", () => {
     const categoryPage = new CategoryPage(page);
     await homePage.headphonesLink.click();
     await expect(categoryPage.categoryTitle).toContainText("headphones");
+    await expect(categoryPage.categoryTitle).toBeVisible();
+    await expect(categoryPage.firstProduct).toBeVisible();
+    await expect(
+      categoryPage.firstProduct.getByRole("button", { name: /See Product/i })
+    ).toBeVisible();
+    await expect(categoryPage.firstProductTitle).toHaveText("XX59 Headphones");
   });
 
   test("should navigate to Speakers category", async ({ page }) => {
@@ -20,6 +26,12 @@ test.describe("Audiophille E-Commerce - Navigation", () => {
     const categoryPage = new CategoryPage(page);
     await homePage.speakersLink.click();
     await expect(categoryPage.categoryTitle).toContainText("speakers");
+    await expect(categoryPage.categoryTitle).toBeVisible();
+    await expect(categoryPage.firstProduct).toBeVisible();
+    await expect(
+      categoryPage.firstProduct.getByRole("button", { name: /See Product/i })
+    ).toBeVisible();
+    await expect(categoryPage.firstProductTitle).toHaveText("ZX7 Speaker");
   });
 
   test("should navigate to Earphones category", async ({ page }) => {
@@ -27,5 +39,23 @@ test.describe("Audiophille E-Commerce - Navigation", () => {
     const categoryPage = new CategoryPage(page);
     await homePage.earphonesLink.click();
     await expect(categoryPage.categoryTitle).toContainText("earphones");
+    await expect(categoryPage.categoryTitle).toBeVisible();
+    await expect(categoryPage.firstProduct).toBeVisible();
+    await expect(
+      categoryPage.firstProduct.getByRole("button", { name: /See Product/i })
+    ).toBeVisible();
+    await expect(categoryPage.firstProductTitle).toHaveText(
+      "YX1 Wireless Earphones"
+    );
+  });
+  test("should navigate to Home page when Home link is clicked", async ({
+    page,
+  }) => {
+    const homePage = new HomePage(page);
+    await homePage.headphonesLink.click();
+    await expect(page).toHaveURL(/.*headphones.*/);
+    await homePage.homeLink.click();
+    await expect(page).toHaveURL("/audiophille-ecommerce");
+    await expect(homePage.heroSection).toBeVisible();
   });
 });
