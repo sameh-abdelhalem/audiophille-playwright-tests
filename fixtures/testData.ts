@@ -1,3 +1,3 @@
 export const testData = {
-  productName: "XX99 Mark II Headphones",
+  productName: "XX99 Mark II Headphones"
 };

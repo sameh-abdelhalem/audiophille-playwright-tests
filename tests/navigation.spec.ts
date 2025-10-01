@@ -1,6 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { HomePage } from "../pages/HomePage";
 import { CategoryPage } from "../pages/CategoryPage";
+import { productNames } from "../fixtures/productNames";
 
 test.describe("Audiophille E-Commerce - Navigation", () => {
   test.beforeEach(async ({ page }) => {
@@ -18,7 +19,9 @@ test.describe("Audiophille E-Commerce - Navigation", () => {
     await expect(
       categoryPage.firstProduct.getByRole("button", { name: /See Product/i })
     ).toBeVisible();
-    await expect(categoryPage.firstProductTitle).toHaveText("XX59 Headphones");
+    await expect(categoryPage.firstProductTitle).toHaveText(
+      productNames.headphones
+    );
   });
 
   test("should navigate to Speakers category", async ({ page }) => {
@@ -31,7 +34,9 @@ test.describe("Audiophille E-Commerce - Navigation", () => {
     await expect(
       categoryPage.firstProduct.getByRole("button", { name: /See Product/i })
     ).toBeVisible();
-    await expect(categoryPage.firstProductTitle).toHaveText("ZX7 Speaker");
+    await expect(categoryPage.firstProductTitle).toHaveText(
+      productNames.speakers
+    );
   });
 
   test("should navigate to Earphones category", async ({ page }) => {
@@ -45,7 +50,7 @@ test.describe("Audiophille E-Commerce - Navigation", () => {
       categoryPage.firstProduct.getByRole("button", { name: /see product/i })
     ).toBeVisible();
     await expect(categoryPage.firstProductTitle).toHaveText(
-      "YX1 Wireless Earphones"
+      productNames.earphones
     );
   });
   test("should navigate to Home page when Home link is clicked", async ({
