@@ -6,14 +6,24 @@ export class HomePage extends BasePage {
   readonly headphonesLink: Locator;
   readonly speakersLink: Locator;
   readonly earphonesLink: Locator;
+  readonly homeLink: Locator;
 
   constructor(page: Page) {
     super(page);
     this.logo = page
       .getByRole("banner")
       .locator(".SecondaryNavigation_logo__lsEYe");
-    this.headphonesLink = page.locator("text=Headphones");
-    this.speakersLink = page.locator("text=Speakers");
-    this.earphonesLink = page.locator("text=Earphones");
+    this.headphonesLink = page
+      .locator("header")
+      .getByRole("link", { name: "Headphones" });
+    this.speakersLink = page
+      .locator("header")
+      .getByRole("link", { name: "Speakers" });
+    this.earphonesLink = page
+      .locator("header")
+      .getByRole("link", { name: "Earphones" });
+    this.homeLink = page
+      .locator("header")
+      .getByRole("link", { name: "Home" });
   }
 }
