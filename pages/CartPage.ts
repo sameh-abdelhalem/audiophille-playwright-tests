@@ -6,6 +6,7 @@ export class CartPage {
   readonly cartItems: Locator;
   readonly totalPrice: Locator;
   readonly totalItemsCount: Locator;
+  readonly singleItemQuantity: Locator;
   constructor(page: Page) {
     this.page = page;
     this.checkoutButton = page.locator("button:has-text('Checkout')");
@@ -16,6 +17,10 @@ export class CartPage {
     this.totalItemsCount = page
       .locator(".Cart_cartHeader__QFTZN")
       .getByRole("heading", { level: 6 });
+    this.singleItemQuantity = page
+      .locator(".Cart_quantity__vTgoG")
+      .locator("div")
+      .nth(1);
   }
 
   async extractNumberFromText(textLocator: Locator) {
@@ -35,6 +40,9 @@ export class CartPage {
   }
 
   async assertCartNotEmpty() {
+    await expect(
+      this.extractNumberFromText(this.totalItemsCount)
+    ).resolves.not.toBe(0);
     await expect(this.cartItems.first()).toBeVisible();
     await expect(this.checkoutButton).toBeEnabled();
   }
