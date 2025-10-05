@@ -5,14 +5,18 @@ export class CategoryPage extends BasePage {
   readonly categoryTitle: Locator;
   readonly firstProduct: Locator;
   readonly firstProductTitle: Locator;
-
+  readonly firstProductButton: Locator;
   constructor(page: Page) {
     super(page);
     this.categoryTitle = page.locator("h2").first();
     this.firstProduct = page
       .locator(".ProductAd_prodAdContainer__R44X9")
       .first();
-    this.firstProductTitle = this.firstProduct.locator("h2");
+
+    this.firstProductTitle = this.firstProduct.getByRole("heading", {
+      level: 2,
+    });
+    this.firstProductButton = this.firstProduct.getByRole("button");
   }
 
   async navigateToCategory(category: "Headphones" | "Speakers" | "Earphones") {
