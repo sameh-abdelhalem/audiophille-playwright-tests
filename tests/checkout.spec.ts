@@ -12,7 +12,9 @@ test.describe("Checkout Page Tests", () => {
     await homePage.goto();
   });
 
-  test("✅ Loads checkout page from cart @smoke", async ({ page }) => {
+  test("✅ Loads checkout page from cart @smoke @positive", async ({
+    page,
+  }) => {
     const homePage = new HomePage(page);
     const categoryPage = new CategoryPage(page);
     const productPage = new ProductPage(page);
@@ -21,15 +23,20 @@ test.describe("Checkout Page Tests", () => {
     // Add product and go to checkout
     await homePage.navigateToCategory("headphones");
     await categoryPage.firstProductButton.click();
+    await expect(productPage.addToCartButton).toBeVisible();
     await productPage.addToCartButton.click();
+    await expect(homePage.cartIcon).toBeVisible();
     await homePage.cartIcon.click();
+    await expect(cartPage.checkoutButton).toBeVisible();
     await cartPage.checkoutButton.click();
-
+    await expect(page).toHaveURL(/.*checkout.*/);
     const checkoutPage = new CheckoutPage(page);
     await expect(checkoutPage.checkoutTitle).toBeVisible();
   });
 
-  test("✅ Fill billing details and submit @positive", async ({ page }) => {
+  test("✅ Fill billing details and submit order @positive @regression", async ({
+    page,
+  }) => {
     const homePage = new HomePage(page);
     const categoryPage = new CategoryPage(page);
     const productPage = new ProductPage(page);
@@ -39,9 +46,13 @@ test.describe("Checkout Page Tests", () => {
     await categoryPage.firstProductButton.click();
     await productPage.addToCartButton.click();
     await homePage.cartIcon.click();
+
+    // Wait for checkout button to be enabled before clicking
+    await expect(cartPage.checkoutButton).toBeEnabled();
     await cartPage.checkoutButton.click();
 
     const checkoutPage = new CheckoutPage(page);
+    await expect(checkoutPage.checkoutTitle).toBeVisible();
     await checkoutPage.fillBillingDetails(testData.billing.john);
     await checkoutPage.selectPaymentMethod("Cash on Delivery");
     await checkoutPage.submitOrder();
@@ -50,7 +61,9 @@ test.describe("Checkout Page Tests", () => {
     await expect(checkoutPage.summarySection).toBeVisible();
   });
 
-  test("❌ Required fields validation @negative", async ({ page }) => {
+  test("❌ Required fields validation shows error @negative", async ({
+    page,
+  }) => {
     const homePage = new HomePage(page);
     const categoryPage = new CategoryPage(page);
     const productPage = new ProductPage(page);
@@ -70,7 +83,9 @@ test.describe("Checkout Page Tests", () => {
     await expect(checkoutPage.errorMessages.first()).toBeVisible();
   });
 
-  test("✅ Select payment method @positive", async ({ page }) => {
+  test("✅ Select payment method Cash on Delivery @positive", async ({
+    page,
+  }) => {
     const homePage = new HomePage(page);
     const categoryPage = new CategoryPage(page);
     const productPage = new ProductPage(page);
@@ -87,7 +102,7 @@ test.describe("Checkout Page Tests", () => {
     await expect(page.getByLabel("Cash on Delivery")).toBeChecked();
   });
 
-  test("✅ Fill e-Money payment details and submit @positive", async ({
+  test("✅ Fill e-Money payment details and submit order @positive @regression", async ({
     page,
   }) => {
     const homePage = new HomePage(page);
@@ -108,7 +123,9 @@ test.describe("Checkout Page Tests", () => {
     await expect(checkoutPage.summarySection).toBeVisible();
   });
 
-  test("❌ e-Money payment fields required @negative", async ({ page }) => {
+  test("❌ e-Money payment fields required validation @negative", async ({
+    page,
+  }) => {
     const homePage = new HomePage(page);
     const categoryPage = new CategoryPage(page);
     const productPage = new ProductPage(page);
@@ -132,7 +149,7 @@ test.describe("Checkout Page Tests", () => {
     ).toBeVisible();
   });
 
-  test("✅ Checkout confirmation popup appears and is correct @positive", async ({
+  test("✅ Checkout confirmation popup appears and is correct @positive @regression", async ({
     page,
   }) => {
     const homePage = new HomePage(page);

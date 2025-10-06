@@ -18,7 +18,7 @@ test.describe("Cart Page Tests", () => {
     await cartPage.assertEmptyCart();
   });
 
-  test("✅ Add product to cart enables checkout @positive @regression", async ({
+  test("✅ Add product to cart enables checkout @smoke @positive @regression", async ({
     page,
   }) => {
     const homePage = new HomePage(page);
@@ -28,11 +28,13 @@ test.describe("Cart Page Tests", () => {
     await homePage.headphonesLink.click();
     await categoryPage.firstProductButton.click();
     await productPage.addToCartButton.click();
-    await homePage.cartIcon.click(); // navigate to cart page
+    await homePage.cartIcon.click();
+    // Wait for checkout button to be enabled
+    await expect(cartPage.checkoutButton).toBeEnabled();
     await cartPage.assertCartNotEmpty();
   });
 
-  test("✅ Add multiple items, total and count update correctly @positive", async ({
+  test("✅ Add multiple items, total and count update correctly @positive @regression", async ({
     page,
   }) => {
     const homePage = new HomePage(page);
@@ -44,19 +46,26 @@ test.describe("Cart Page Tests", () => {
     await homePage.headphonesLink.click();
     await categoryPage.firstProductButton.click();
     await productPage.addToCartButton.click();
+    // Wait for cart to update
+    await expect(homePage.cartIcon).toBeVisible();
 
     // Add second item (navigate to speakers)
     await homePage.speakersLink.click();
     await categoryPage.firstProductButton.click();
     await productPage.addToCartButton.click();
+    await expect(homePage.cartIcon).toBeVisible();
 
     await homePage.cartIcon.click();
+    // Wait for both items to appear
+    await expect(cartPage.cartItems.nth(1)).toBeVisible();
     const itemCount = await cartPage.getItemCount();
     await expect(itemCount).toBe(2);
     await expect(cartPage.checkoutButton).toBeEnabled();
   });
 
-  test("✅ Remove item updates cart count @positive", async ({ page }) => {
+  test("✅ Remove item updates cart count @positive @regression", async ({
+    page,
+  }) => {
     const homePage = new HomePage(page);
     const categoryPage = new CategoryPage(page);
     const productPage = new ProductPage(page);
@@ -67,13 +76,18 @@ test.describe("Cart Page Tests", () => {
     await categoryPage.firstProductButton.click();
     await productPage.addToCartButton.click();
     await homePage.cartIcon.click();
+    await expect(cartPage.checkoutButton).toBeEnabled();
 
     // Remove all items
     await cartPage.removeAllItems();
+    // Wait for cart to be empty
+    await expect(cartPage.checkoutButton).toBeDisabled();
     await cartPage.assertEmptyCart();
   });
 
-  test("✅ Cart persists during navigation @positive", async ({ page }) => {
+  test("✅ Cart persists during navigation @positive @regression", async ({
+    page,
+  }) => {
     const homePage = new HomePage(page);
     const categoryPage = new CategoryPage(page);
     const productPage = new ProductPage(page);
@@ -83,17 +97,19 @@ test.describe("Cart Page Tests", () => {
     await homePage.headphonesLink.click();
     await categoryPage.firstProductButton.click();
     await productPage.addToCartButton.click();
+    await expect(homePage.cartIcon).toBeVisible();
 
     // Navigate away
-
     await homePage.speakersLink.click();
+    await expect(categoryPage.categoryTitle).toContainText("speakers");
 
     // Return to cart
     await homePage.cartIcon.click();
+    await expect(cartPage.checkoutButton).toBeEnabled();
     await cartPage.assertCartNotEmpty();
   });
 
-  test("❌ Checkout button disabled with empty cart @negative", async ({
+  test("❌ Checkout button disabled with empty cart @negative @regression", async ({
     page,
   }) => {
     const homePage = new HomePage(page);
@@ -103,7 +119,7 @@ test.describe("Cart Page Tests", () => {
     await cartPage.assertEmptyCart();
   });
 
-  test("❌ Add-to-cart twice doesn’t duplicate incorrectly @negative", async ({
+  test("❌ Add-to-cart twice doesn’t duplicate incorrectly @negative @regression", async ({
     page,
   }) => {
     const homePage = new HomePage(page);
@@ -134,7 +150,7 @@ test.describe("Cart Page Tests", () => {
     await cartPage.assertEmptyCart();
   });
 
-  test("✅ Quantity controls (+/-) update product quantity @positive", async ({
+  test("✅ Quantity controls (+/-) update product quantity @positive @regression", async ({
     page,
   }) => {
     const homePage = new HomePage(page);
@@ -156,6 +172,7 @@ test.describe("Cart Page Tests", () => {
     await cartPage.plusButton.click();
     quantity = await cartPage.getSingleItemQuantity();
     await expect(quantity).toBe(2);
+    await expect(cartPage.singleItemQuantity).toHaveText("2");
 
     // Click minus, quantity should be 1
     await cartPage.minusButton.click();
@@ -167,7 +184,7 @@ test.describe("Cart Page Tests", () => {
     await cartPage.assertEmptyCart();
   });
 
-  test("✅ Quantity controls work for multiple products @positive", async ({
+  test("✅ Quantity controls work for multiple products @positive @regression", async ({
     page,
   }) => {
     const homePage = new HomePage(page);
@@ -179,35 +196,43 @@ test.describe("Cart Page Tests", () => {
     await homePage.headphonesLink.click();
     await categoryPage.firstProductButton.click();
     await productPage.addToCartButton.click();
+    await expect(homePage.cartIcon).toBeVisible();
 
     // Add second product
     await homePage.speakersLink.click();
     await categoryPage.firstProductButton.click();
     await productPage.addToCartButton.click();
+    await expect(homePage.cartIcon).toBeVisible();
 
     await homePage.cartIcon.click();
+    await expect(cartPage.cartItems.nth(1)).toBeVisible();
 
     // Increase quantity for first product
     await cartPage.getPlusButton(0).click();
+    await expect(cartPage.getProductQuantity(0)).toHaveText("2");
     let quantity1 = await cartPage.getQuantityValue(0);
     await expect(quantity1).toBe(2);
 
     // Increase quantity for second product
     await cartPage.getPlusButton(1).click();
+    await expect(cartPage.getProductQuantity(1)).toHaveText("2");
     let quantity2 = await cartPage.getQuantityValue(1);
     await expect(quantity2).toBe(2);
+
     // Decrease quantity for second product
     await cartPage.getMinusButton(1).click();
+    await expect(cartPage.getProductQuantity(1)).toHaveText("1");
     quantity2 = await cartPage.getQuantityValue(1);
     await expect(quantity2).toBe(1);
 
     // Try to decrease below 1 for second product (should remove it)
     await cartPage.getMinusButton(1).click();
+    await expect(cartPage.cartItems.nth(1)).not.toBeVisible();
     const itemCount = await cartPage.getItemCount();
     await expect(itemCount).toBe(1);
   });
 
-  test("✅ Remove single product when multiple in cart @positive", async ({
+  test("✅ Remove single product when multiple in cart @positive @regression", async ({
     page,
   }) => {
     const homePage = new HomePage(page);
@@ -233,7 +258,7 @@ test.describe("Cart Page Tests", () => {
     await expect(itemCount).toBe(1);
   });
 
-  test("✅ Total price updates with quantity changes @positive", async ({
+  test("✅ Total price updates with quantity changes @positive @regression", async ({
     page,
   }) => {
     const homePage = new HomePage(page);
@@ -266,7 +291,7 @@ test.describe("Cart Page Tests", () => {
     await expect(updatedPrice).toBeGreaterThan(initialPrice);
   });
 
-  test("✅ Add multiple quantities of products at once from product page @positive", async ({
+  test("✅ Add multiple quantities of products at once from product page @positive @regression", async ({
     page,
   }) => {
     const homePage = new HomePage(page);
@@ -277,10 +302,10 @@ test.describe("Cart Page Tests", () => {
     // Add 2 headphones at once
     await homePage.headphonesLink.click();
     await categoryPage.firstProductButton.click();
-    // Increase quantity to 2 on product page
     await productPage.plusButton.click();
     await expect(await productPage.getQuantityValue()).toBe(2);
     await productPage.addToCartButton.click();
+    await expect(homePage.cartIcon).toBeVisible();
 
     // Add 3 speakers at once
     await homePage.speakersLink.click();
@@ -289,8 +314,10 @@ test.describe("Cart Page Tests", () => {
     await productPage.plusButton.click();
     await expect(await productPage.getQuantityValue()).toBe(3);
     await productPage.addToCartButton.click();
+    await expect(homePage.cartIcon).toBeVisible();
 
     await homePage.cartIcon.click();
+    await expect(cartPage.cartItems.nth(1)).toBeVisible();
 
     // Cart should have 2 items, with correct quantities
     const itemCount = await cartPage.getItemCount();

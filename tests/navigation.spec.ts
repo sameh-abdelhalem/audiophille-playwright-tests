@@ -9,7 +9,9 @@ test.describe("Audiophille E-Commerce - Navigation", () => {
     await homePage.goto();
   });
 
-  test("should navigate to Headphones category", async ({ page }) => {
+  test("✅ should navigate to Headphones category @smoke @positive", async ({
+    page,
+  }) => {
     const homePage = new HomePage(page);
     const categoryPage = new CategoryPage(page);
     await homePage.navigateToCategory("headphones");
@@ -24,7 +26,9 @@ test.describe("Audiophille E-Commerce - Navigation", () => {
     );
   });
 
-  test("should navigate to Speakers category", async ({ page }) => {
+  test("✅ should navigate to Speakers category @smoke @positive", async ({
+    page,
+  }) => {
     const homePage = new HomePage(page);
     const categoryPage = new CategoryPage(page);
     await homePage.navigateToCategory("speakers");
@@ -39,7 +43,9 @@ test.describe("Audiophille E-Commerce - Navigation", () => {
     );
   });
 
-  test("should navigate to Earphones category", async ({ page }) => {
+  test("✅ should navigate to Earphones category @smoke @positive", async ({
+    page,
+  }) => {
     const homePage = new HomePage(page);
     const categoryPage = new CategoryPage(page);
     await homePage.navigateToCategory("earphones");
@@ -53,7 +59,7 @@ test.describe("Audiophille E-Commerce - Navigation", () => {
       productNames.earphones
     );
   });
-  test("should navigate to Home page when Home link is clicked", async ({
+  test("✅ should navigate to Home page when Home link is clicked @positive", async ({
     page,
   }) => {
     const homePage = new HomePage(page);
@@ -63,7 +69,7 @@ test.describe("Audiophille E-Commerce - Navigation", () => {
     await expect(page).toHaveURL("/audiophille-ecommerce");
     await expect(homePage.heroSection).toBeVisible();
   });
-  test("should navigate to Home page when logo is clicked", async ({
+  test("✅ should navigate to Home page when logo is clicked @positive", async ({
     page,
   }) => {
     const homePage = new HomePage(page);

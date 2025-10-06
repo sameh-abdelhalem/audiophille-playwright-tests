@@ -10,7 +10,9 @@ test.describe("Audiophille E-Commerce - Product", () => {
     await homePage.goto();
   });
 
-  test("should open ZX7 Speaker product page", async ({ page }) => {
+  test("✅ Product: ZX7 Speaker details display correctly @smoke @positive @ui", async ({
+    page,
+  }) => {
     const homePage = new HomePage(page);
     const categoryPage = new CategoryPage(page);
     const productPage = new ProductPage(page);
@@ -41,7 +43,9 @@ test.describe("Audiophille E-Commerce - Product", () => {
     await expect(productPage.addToCartButton).toBeVisible();
   });
 
-  test("should open  XX59 Headphones page", async ({ page }) => {
+  test("✅ Product: XX59 Headphones details display correctly @regression @positive @ui", async ({
+    page,
+  }) => {
     const homePage = new HomePage(page);
     const categoryPage = new CategoryPage(page);
     const productPage = new ProductPage(page);
@@ -72,7 +76,7 @@ test.describe("Audiophille E-Commerce - Product", () => {
     await expect(productPage.addToCartButton).toBeVisible();
   });
 
-  test("should not show missing product details (negative test)", async ({
+  test("❌ Product: no missing required details (negative validation) @negative @ui", async ({
     page,
   }) => {
     const homePage = new HomePage(page);
