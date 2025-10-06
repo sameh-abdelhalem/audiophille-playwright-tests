@@ -7,6 +7,8 @@ export class CartPage {
   readonly totalPrice: Locator;
   readonly totalItemsCount: Locator;
   readonly singleItemQuantity: Locator;
+  readonly plusButton: Locator;
+  readonly minusButton: Locator;
   constructor(page: Page) {
     this.page = page;
     this.checkoutButton = page.locator("button:has-text('Checkout')");
@@ -21,6 +23,12 @@ export class CartPage {
       .locator(".Cart_quantity__vTgoG")
       .locator("div")
       .nth(1);
+    this.plusButton = page
+      .locator(".Cart_quantity__vTgoG")
+      .locator(".Cart_amount__OVEt9", { hasText: "+" });
+    this.minusButton = page
+      .locator(".Cart_quantity__vTgoG ")
+      .locator(".Cart_amount__OVEt9", { hasText: "-" });
   }
 
   async extractNumberFromText(textLocator: Locator) {
@@ -52,5 +60,38 @@ export class CartPage {
       .locator(".Cart_cartHeader__QFTZN")
       .getByText("Remove all");
     await removeButton.click();
+  }
+
+  getProductContainer(index: number) {
+    return this.cartItems.nth(index);
+  }
+
+  getProductQuantity(index: number) {
+    return this.getProductContainer(index)
+      .locator(".Cart_quantity__vTgoG div")
+      .nth(1);
+  }
+
+  getPlusButton(index: number) {
+    return this.getProductContainer(index).locator(
+      ".Cart_quantity__vTgoG .Cart_amount__OVEt9",
+      { hasText: "+" }
+    );
+  }
+
+  getMinusButton(index: number) {
+    return this.getProductContainer(index).locator(
+      ".Cart_quantity__vTgoG .Cart_amount__OVEt9",
+      { hasText: "-" }
+    );
+  }
+
+  async getQuantityValue(index: number) {
+    const quantityLocator = this.getProductQuantity(index);
+    return Number(await quantityLocator.textContent());
+  }
+
+  async getSingleItemQuantity() {
+    return Number(await this.singleItemQuantity.textContent());
   }
 }

@@ -6,6 +6,9 @@ export class ProductPage extends BasePage {
   readonly addToCartButton: Locator;
   readonly productDescription: Locator;
   readonly productPrice: Locator;
+  readonly plusButton: Locator;
+  readonly minusButton: Locator;
+  readonly quantityValue: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -19,9 +22,24 @@ export class ProductPage extends BasePage {
       .locator("..")
       .getByRole("paragraph")
       .nth(1);
+    this.plusButton = page
+      .locator(".ProductDetails_amount__u-5E4")
+      .getByText("+");
+    this.minusButton = page
+      .locator(".ProductDetails_amount__u-5E4")
+      .getByText("-");
+    this.quantityValue = page
+      .locator(".ProductDetails_addToCart__qL7fe")
+      .first()
+      .locator("div", { hasNotText: "+" })
+      .nth(1);
   }
 
   async addToCart() {
     await this.addToCartButton.click();
+  }
+
+  async getQuantityValue() {
+    return Number(await this.quantityValue.textContent());
   }
 }
