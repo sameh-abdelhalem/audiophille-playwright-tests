@@ -12,7 +12,7 @@ test.describe("Checkout Page Tests", () => {
     await homePage.goto();
   });
 
-  test("✅ Loads checkout page from cart @smoke @positive", async ({
+  test("✅ Loads checkout page from cart @smoke @positive @ui", async ({
     page,
   }) => {
     const homePage = new HomePage(page);
@@ -34,7 +34,7 @@ test.describe("Checkout Page Tests", () => {
     await expect(checkoutPage.checkoutTitle).toBeVisible();
   });
 
-  test("✅ Fill billing details and submit order @positive @regression", async ({
+  test("✅ Fill billing details and submit order @positive @regression @ui", async ({
     page,
   }) => {
     const homePage = new HomePage(page);
@@ -61,7 +61,7 @@ test.describe("Checkout Page Tests", () => {
     await expect(checkoutPage.summarySection).toBeVisible();
   });
 
-  test("❌ Required fields validation shows error @negative", async ({
+  test("❌ Required fields validation shows error @negative @ui", async ({
     page,
   }) => {
     const homePage = new HomePage(page);
@@ -83,7 +83,7 @@ test.describe("Checkout Page Tests", () => {
     await expect(checkoutPage.errorMessages.first()).toBeVisible();
   });
 
-  test("✅ Select payment method Cash on Delivery @positive", async ({
+  test("✅ Select payment method Cash on Delivery @positive @ui", async ({
     page,
   }) => {
     const homePage = new HomePage(page);
@@ -102,7 +102,7 @@ test.describe("Checkout Page Tests", () => {
     await expect(page.getByLabel("Cash on Delivery")).toBeChecked();
   });
 
-  test("✅ Fill e-Money payment details and submit order @positive @regression", async ({
+  test("✅ Fill e-Money payment details and submit order @positive @regression @ui", async ({
     page,
   }) => {
     const homePage = new HomePage(page);
@@ -123,7 +123,7 @@ test.describe("Checkout Page Tests", () => {
     await expect(checkoutPage.summarySection).toBeVisible();
   });
 
-  test("❌ e-Money payment fields required validation @negative", async ({
+  test("❌ e-Money payment fields required validation @negative @ui", async ({
     page,
   }) => {
     const homePage = new HomePage(page);
@@ -149,7 +149,7 @@ test.describe("Checkout Page Tests", () => {
     ).toBeVisible();
   });
 
-  test("✅ Checkout confirmation popup appears and is correct @positive @regression", async ({
+  test("✅ Checkout confirmation popup appears and is correct @positive @regression @ui", async ({
     page,
   }) => {
     const homePage = new HomePage(page);
