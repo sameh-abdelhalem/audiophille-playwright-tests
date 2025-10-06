@@ -10,6 +10,7 @@ export class CartPage {
   readonly singleItemQuantity: Locator;
   readonly plusButton: Locator;
   readonly minusButton: Locator;
+  readonly cartHeader: Locator;
   constructor(page: Page) {
     this.page = page;
     this.checkoutButton = page.locator("button:has-text('Checkout')");
@@ -30,6 +31,7 @@ export class CartPage {
     this.minusButton = page
       .locator(".Cart_quantity__vTgoG ")
       .locator(".Cart_amount__OVEt9", { hasText: "-" });
+    this.cartHeader = page.locator(".Cart_cartHeader__QFTZN");
   }
 
   async extractNumberFromText(textLocator: Locator) {
@@ -99,5 +101,10 @@ export class CartPage {
   async getTotalPriceValue() {
     const raw = await this.totalPrice.textContent();
     return parsePrice(raw);
+  }
+
+  async waitForReady() {
+    await this.cartHeader.waitFor({ state: "visible" });
+    await this.checkoutButton.waitFor({ state: "attached" });
   }
 }

@@ -1,4 +1,4 @@
-import { Page, Locator } from "@playwright/test";
+import { Page, Locator, expect } from "@playwright/test";
 import { BasePage } from "./BasePage";
 
 export class CategoryPage extends BasePage {
@@ -17,5 +17,15 @@ export class CategoryPage extends BasePage {
       level: 2,
     });
     this.firstProductButton = this.firstProduct.getByRole("button");
+  }
+
+  async waitForFirstProduct() {
+    await expect(this.firstProduct).toBeVisible();
+    await expect(this.firstProductButton).toBeVisible();
+  }
+
+  async openFirstProduct() {
+    await this.waitForFirstProduct();
+    await this.firstProductButton.click();
   }
 }
