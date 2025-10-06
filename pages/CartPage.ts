@@ -1,4 +1,5 @@
 import { Page, Locator, expect } from "@playwright/test";
+import { parsePrice } from "../utils/price";
 
 export class CartPage {
   readonly page: Page;
@@ -93,5 +94,10 @@ export class CartPage {
 
   async getSingleItemQuantity() {
     return Number(await this.singleItemQuantity.textContent());
+  }
+
+  async getTotalPriceValue() {
+    const raw = await this.totalPrice.textContent();
+    return parsePrice(raw);
   }
 }

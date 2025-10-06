@@ -5,6 +5,7 @@ import { ProductPage } from "../pages/ProductPage";
 import { CartPage } from "../pages/CartPage";
 import { CheckoutPage } from "../pages/CheckoutPage";
 import { testData } from "../fixtures/testData";
+import { PaymentMethod } from "../fixtures/paymentMethod";
 
 test.describe("Checkout Page Tests", () => {
   test.beforeEach(async ({ page }) => {
@@ -54,7 +55,7 @@ test.describe("Checkout Page Tests", () => {
     const checkoutPage = new CheckoutPage(page);
     await expect(checkoutPage.checkoutTitle).toBeVisible();
     await checkoutPage.fillBillingDetails(testData.billing.john);
-    await checkoutPage.selectPaymentMethod("Cash on Delivery");
+    await checkoutPage.selectPaymentMethod(PaymentMethod.CashOnDelivery);
     await checkoutPage.submitOrder();
 
     // Assert summary or confirmation appears
@@ -98,7 +99,7 @@ test.describe("Checkout Page Tests", () => {
     await cartPage.checkoutButton.click();
 
     const checkoutPage = new CheckoutPage(page);
-    await checkoutPage.selectPaymentMethod("Cash on Delivery");
+    await checkoutPage.selectPaymentMethod(PaymentMethod.CashOnDelivery);
     await expect(page.getByLabel("Cash on Delivery")).toBeChecked();
   });
 
@@ -117,7 +118,7 @@ test.describe("Checkout Page Tests", () => {
     await cartPage.checkoutButton.click();
 
     const checkoutPage = new CheckoutPage(page);
-    await checkoutPage.selectPaymentMethod("e-Money");
+    await checkoutPage.selectPaymentMethod(PaymentMethod.EMoney);
     await checkoutPage.fillBillingDetails(testData.billing.jane);
     await checkoutPage.submitOrder();
     await expect(checkoutPage.summarySection).toBeVisible();
@@ -138,7 +139,7 @@ test.describe("Checkout Page Tests", () => {
     await cartPage.checkoutButton.click();
 
     const checkoutPage = new CheckoutPage(page);
-    await checkoutPage.selectPaymentMethod("e-Money");
+    await checkoutPage.selectPaymentMethod(PaymentMethod.EMoney);
     await checkoutPage.fillBillingDetails(
       // eMoneyNumber and eMoneyPin intentionally omitted
       testData.billing.janeWithoutEMoney
@@ -165,7 +166,7 @@ test.describe("Checkout Page Tests", () => {
 
     const checkoutPage = new CheckoutPage(page);
     await checkoutPage.fillBillingDetails(testData.billing.john);
-    await checkoutPage.selectPaymentMethod("Cash on Delivery");
+    await checkoutPage.selectPaymentMethod(PaymentMethod.CashOnDelivery);
     await checkoutPage.submitOrder();
 
     // Validate confirmation popup

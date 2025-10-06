@@ -1,5 +1,7 @@
 import { Page, Locator } from "@playwright/test";
 import { BasePage } from "./BasePage";
+import { PaymentMethod } from "../fixtures/paymentMethod";
+import { parsePrice } from "../utils/price";
 
 export class CheckoutPage extends BasePage {
   readonly checkoutTitle: Locator;
@@ -88,8 +90,13 @@ export class CheckoutPage extends BasePage {
     }
   }
 
-  async selectPaymentMethod(method: "e-Money" | "Cash on Delivery") {
+  async selectPaymentMethod(method: PaymentMethod) {
     await this.page.getByLabel(method).check();
+  }
+
+  async getGrandTotalValue() {
+    const raw = await this.confirmationGrandTotal.textContent();
+    return parsePrice(raw);
   }
 
   async submitOrder() {
