@@ -1,4 +1,4 @@
-import { Page } from "@playwright/test";
+import { Page, Locator } from "@playwright/test";
 
 export class BasePage {
   protected page: Page;
@@ -14,7 +14,24 @@ export class BasePage {
   async getTitle() {
     return this.page.title();
   }
-  async navigateToCategory(category: "Headphones" | "Speakers" | "Earphones") {
-    await this.page.click(`text=${category}`);
+
+  async navigateToCategory(category: "headphones" | "speakers" | "earphones") {
+    await this.clickByText(category);
+  }
+
+  async clickByText(text: string) {
+    await this.page.locator("header").getByRole("link", { name: text }).click();
+  }
+
+  getByRole(role: string, options?: Record<string, any>): Locator {
+    return this.page.getByRole(role as any, options);
+  }
+
+  async waitForUrl(urlPart: string) {
+    await this.page.waitForURL(urlPart);
+  }
+
+  async reload() {
+    await this.page.reload();
   }
 }

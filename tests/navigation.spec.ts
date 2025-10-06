@@ -12,7 +12,7 @@ test.describe("Audiophille E-Commerce - Navigation", () => {
   test("should navigate to Headphones category", async ({ page }) => {
     const homePage = new HomePage(page);
     const categoryPage = new CategoryPage(page);
-    await homePage.headphonesLink.click();
+    await homePage.navigateToCategory("headphones");
     await expect(categoryPage.categoryTitle).toContainText("headphones");
     await expect(categoryPage.categoryTitle).toBeVisible();
     await expect(categoryPage.firstProduct).toBeVisible();
@@ -27,7 +27,7 @@ test.describe("Audiophille E-Commerce - Navigation", () => {
   test("should navigate to Speakers category", async ({ page }) => {
     const homePage = new HomePage(page);
     const categoryPage = new CategoryPage(page);
-    await homePage.speakersLink.click();
+    await homePage.navigateToCategory("speakers");
     await expect(categoryPage.categoryTitle).toContainText("speakers");
     await expect(categoryPage.categoryTitle).toBeVisible();
     await expect(categoryPage.firstProduct).toBeVisible();
@@ -42,7 +42,7 @@ test.describe("Audiophille E-Commerce - Navigation", () => {
   test("should navigate to Earphones category", async ({ page }) => {
     const homePage = new HomePage(page);
     const categoryPage = new CategoryPage(page);
-    await homePage.earphonesLink.click();
+    await homePage.navigateToCategory("earphones");
     await expect(categoryPage.categoryTitle).toContainText("earphones");
     await expect(categoryPage.categoryTitle).toBeVisible();
     await expect(categoryPage.firstProduct).toBeVisible();
@@ -57,7 +57,7 @@ test.describe("Audiophille E-Commerce - Navigation", () => {
     page,
   }) => {
     const homePage = new HomePage(page);
-    await homePage.headphonesLink.click();
+    await homePage.navigateToCategory("headphones");
     await expect(page).toHaveURL(/.*headphones.*/);
     await homePage.homeLink.click();
     await expect(page).toHaveURL("/audiophille-ecommerce");
@@ -67,7 +67,7 @@ test.describe("Audiophille E-Commerce - Navigation", () => {
     page,
   }) => {
     const homePage = new HomePage(page);
-    await homePage.speakersLink.click();
+    await homePage.navigateToCategory("speakers");
     await expect(page).toHaveURL(/.*speakers.*/);
     await homePage.logo.click();
     await expect(page).toHaveURL("/audiophille-ecommerce");

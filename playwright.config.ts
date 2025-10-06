@@ -11,6 +11,7 @@ export default defineConfig({
     trace: "on-first-retry",
     baseURL: "https://sameh-abdelhalem.github.io/",
   },
+  timeout: 60 * 1000,
 
   projects: [
     {

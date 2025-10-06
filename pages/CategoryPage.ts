@@ -18,8 +18,7 @@ export class CategoryPage extends BasePage {
     });
     this.firstProductButton = this.firstProduct.getByRole("button");
   }
-
-  async navigateToCategory(category: "Headphones" | "Speakers" | "Earphones") {
+  async navigateToCategory(category: "headphones" | "speakers" | "earphones") {
     await this.page.click(`text=${category}`);
   }
 }
