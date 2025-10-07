@@ -7,6 +7,7 @@ test.describe("Checkout Page Tests", () => {
   test.beforeEach(async ({ page }) => {
     const pm = new PageManager(page);
     await pm.onHomePage().goto();
+    await pm.onHomePage().waitForReadyState("domcontentloaded");
   });
 
   test("✅ Loads checkout page from cart @smoke @positive @ui", async ({
@@ -16,6 +17,7 @@ test.describe("Checkout Page Tests", () => {
 
     // Add product and go to checkout
     await pm.onHomePage().navigateToCategory("headphones");
+    await pm.onHomePage().waitForReadyState("domcontentloaded");
     await pm.onCategoryPage().firstProductButton.click();
     await expect(pm.onProductPage().addToCartButton).toBeVisible();
     await pm.onProductPage().addToCartButton.click();
@@ -31,8 +33,8 @@ test.describe("Checkout Page Tests", () => {
     page,
   }) => {
     const pm = new PageManager(page);
-
     await pm.onHomePage().navigateToCategory("speakers");
+    await pm.onHomePage().waitForReadyState("domcontentloaded");
     await pm.onCategoryPage().firstProductButton.click();
     await pm.onProductPage().addToCartButton.click();
     await pm.onHomePage().cartIcon.click();
@@ -55,8 +57,8 @@ test.describe("Checkout Page Tests", () => {
     page,
   }) => {
     const pm = new PageManager(page);
-
     await pm.onHomePage().navigateToCategory("earphones");
+    await pm.onHomePage().waitForReadyState("domcontentloaded");
     await pm.onCategoryPage().firstProductButton.click();
     await pm.onProductPage().addToCartButton.click();
     await pm.onHomePage().cartIcon.click();
@@ -73,8 +75,8 @@ test.describe("Checkout Page Tests", () => {
     page,
   }) => {
     const pm = new PageManager(page);
-
     await pm.onHomePage().navigateToCategory("headphones");
+    await pm.onHomePage().waitForReadyState("domcontentloaded");
     await pm.onCategoryPage().firstProductButton.click();
     await pm.onProductPage().addToCartButton.click();
     await pm.onHomePage().cartIcon.click();
@@ -88,8 +90,8 @@ test.describe("Checkout Page Tests", () => {
     page,
   }) => {
     const pm = new PageManager(page);
-
     await pm.onHomePage().navigateToCategory("speakers");
+    await pm.onHomePage().waitForReadyState("domcontentloaded");
     await pm.onCategoryPage().firstProductButton.click();
     await pm.onProductPage().addToCartButton.click();
     await pm.onHomePage().cartIcon.click();
@@ -105,8 +107,8 @@ test.describe("Checkout Page Tests", () => {
     page,
   }) => {
     const pm = new PageManager(page);
-
     await pm.onHomePage().navigateToCategory("speakers");
+    await pm.onHomePage().waitForReadyState("domcontentloaded");
     await pm.onCategoryPage().firstProductButton.click();
     await pm.onProductPage().addToCartButton.click();
     await pm.onHomePage().cartIcon.click();
@@ -118,15 +120,17 @@ test.describe("Checkout Page Tests", () => {
       testData.billing.janeWithoutEMoney
     );
     await pm.onCheckoutPage().submitOrder();
-    await expect(pm.onCheckoutPage().errorMessages.getByText("please type your enum")).toBeVisible();
+    await expect(
+      pm.onCheckoutPage().errorMessages.getByText("please type your enum")
+    ).toBeVisible();
   });
 
   test("✅ Checkout confirmation popup appears and is correct @positive @regression @ui", async ({
     page,
   }) => {
     const pm = new PageManager(page);
-
     await pm.onHomePage().navigateToCategory("speakers");
+    await pm.onHomePage().waitForReadyState("domcontentloaded");
     await pm.onCategoryPage().firstProductButton.click();
     await pm.onProductPage().addToCartButton.click();
     await pm.onHomePage().cartIcon.click();

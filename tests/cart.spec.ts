@@ -5,6 +5,7 @@ test.describe("Cart Page Tests", () => {
   test.beforeEach(async ({ page }) => {
     const pm = new PageManager(page);
     await pm.onHomePage().goto();
+    await pm.onHomePage().waitForReadyState("domcontentloaded");
   });
   test("✅ Cart loads empty state correctly @smoke @negative", async ({
     page,
@@ -19,6 +20,7 @@ test.describe("Cart Page Tests", () => {
   }) => {
     const pm = new PageManager(page);
     await pm.onHomePage().headphonesLink.click();
+    await pm.onHomePage().waitForReadyState("domcontentloaded");
     await pm.onCategoryPage().openFirstProduct();
     await pm.onProductPage().addToCartButton.click();
     await pm.onHomePage().cartIcon.click(); // navigate to cart
@@ -34,6 +36,7 @@ test.describe("Cart Page Tests", () => {
 
     // Add first item
     await pm.onHomePage().headphonesLink.click();
+    await pm.onHomePage().waitForReadyState("domcontentloaded");
     await pm.onCategoryPage().openFirstProduct();
     await pm.onProductPage().addToCartButton.click();
     // Wait for cart to update
@@ -41,6 +44,7 @@ test.describe("Cart Page Tests", () => {
 
     // Add second item (navigate to speakers)
     await pm.onHomePage().speakersLink.click();
+    await pm.onHomePage().waitForReadyState("domcontentloaded");
     await pm.onCategoryPage().openFirstProduct();
     await pm.onProductPage().addToCartButton.click();
     await expect(pm.onHomePage().cartIcon).toBeVisible();
@@ -177,6 +181,7 @@ test.describe("Cart Page Tests", () => {
 
     // Add second product
     await pm.onHomePage().speakersLink.click();
+    await pm.onHomePage().waitForReadyState("domcontentloaded");
     await pm.onCategoryPage().openFirstProduct();
     await pm.onProductPage().addToCartButton.click();
     await expect(pm.onHomePage().cartIcon).toBeVisible();
@@ -280,6 +285,7 @@ test.describe("Cart Page Tests", () => {
 
     // Add 3 speakers at once
     await pm.onHomePage().speakersLink.click();
+    await pm.onHomePage().waitForReadyState("domcontentloaded");
     await pm.onCategoryPage().openFirstProduct();
     await pm.onProductPage().plusButton.click();
     await pm.onProductPage().plusButton.click();

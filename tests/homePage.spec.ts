@@ -5,6 +5,7 @@ test.describe("Homepage", () => {
   test.beforeEach(async ({ page }) => {
     const homePage = new HomePage(page);
     await homePage.goto();
+    await homePage.waitForReadyState("domcontentloaded");
   });
   test("✅ Homepage: logo is visible @smoke @ui", async ({ page }) => {
     const homePage = new HomePage(page);

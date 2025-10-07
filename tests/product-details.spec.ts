@@ -4,7 +4,9 @@ import { products } from "../fixtures/products";
 
 test.describe("Audiophille E-Commerce - Product", () => {
   test.beforeEach(async ({ page }) => {
-    await new PageManager(page).onHomePage().goto();
+    const pm = new PageManager(page);
+    await pm.onHomePage().goto();
+    await pm.onHomePage().waitForReadyState("domcontentloaded");
   });
 
   test("✅ Product: ZX7 Speaker details display correctly @smoke @positive @ui", async ({
@@ -12,7 +14,11 @@ test.describe("Audiophille E-Commerce - Product", () => {
   }) => {
     const pm = new PageManager(page);
     await pm.onHomePage().speakersLink.click();
+    await pm.onHomePage().waitForReadyState("domcontentloaded");
+    // Open first product details
     await pm.onCategoryPage().openFirstProduct();
+
+    // Assertions
     const prod = pm.onProductPage();
     await expect(prod.productTitle).toBeVisible();
     await expect(prod.productTitle).toHaveText(products.ZX7Speaker.header);
@@ -34,7 +40,7 @@ test.describe("Audiophille E-Commerce - Product", () => {
     const pm = new PageManager(page);
     // Navigate to Headphones category
     await pm.onHomePage().headphonesLink.click();
-
+    await pm.onHomePage().waitForReadyState("domcontentloaded");
     // Click on  XX59 Headphones page
     await pm.onCategoryPage().firstProductButton.click();
 
@@ -65,7 +71,7 @@ test.describe("Audiophille E-Commerce - Product", () => {
     const pm = new PageManager(page);
     // Navigate to Speakers category
     await pm.onHomePage().speakersLink.click();
-
+    await pm.onHomePage().waitForReadyState("domcontentloaded");
     // Click on ZX7 Speaker
     await pm.onCategoryPage().firstProductButton.click();
 

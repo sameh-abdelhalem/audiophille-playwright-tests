@@ -34,4 +34,16 @@ export class BasePage {
   async reload() {
     await this.page.reload();
   }
+
+  // --- Added defensive waits ---
+  async waitForReadyState(
+    state: "load" | "domcontentloaded" | "networkidle" = "load"
+  ) {
+    await this.page.waitForLoadState(state);
+  }
+
+  async waitForNetworkIdle() {
+    // Swallow occasional timeouts on static hosting
+    await this.page.waitForLoadState("networkidle").catch(() => {});
+  }
 }
