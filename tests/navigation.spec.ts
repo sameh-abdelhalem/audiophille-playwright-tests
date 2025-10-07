@@ -1,27 +1,27 @@
 import { test, expect } from "@playwright/test";
-import { HomePage } from "../pages/HomePage";
-import { CategoryPage } from "../pages/CategoryPage";
 import { productNames } from "../fixtures/productNames";
+import { PageManager } from "../pages/pageManager";
 
 test.describe("Audiophille E-Commerce - Navigation", () => {
   test.beforeEach(async ({ page }) => {
-    const homePage = new HomePage(page);
-    await homePage.goto();
+    const pm = new PageManager(page);
+    await pm.onHomePage().goto();
   });
 
   test("✅ should navigate to Headphones category @smoke @positive @ui", async ({
     page,
   }) => {
-    const homePage = new HomePage(page);
-    const categoryPage = new CategoryPage(page);
-    await homePage.navigateToCategory("headphones");
-    await expect(categoryPage.categoryTitle).toContainText("headphones");
-    await expect(categoryPage.categoryTitle).toBeVisible();
-    await expect(categoryPage.firstProduct).toBeVisible();
+    const pm = new PageManager(page);
+    await pm.onHomePage().navigateToCategory("headphones");
+    await expect(pm.onCategoryPage().categoryTitle).toContainText("headphones");
+    await expect(pm.onCategoryPage().categoryTitle).toBeVisible();
+    await expect(pm.onCategoryPage().firstProduct).toBeVisible();
     await expect(
-      categoryPage.firstProduct.getByRole("button", { name: /See Product/i })
+      pm
+        .onCategoryPage()
+        .firstProduct.getByRole("button", { name: /See Product/i })
     ).toBeVisible();
-    await expect(categoryPage.firstProductTitle).toHaveText(
+    await expect(pm.onCategoryPage().firstProductTitle).toHaveText(
       productNames.headphones
     );
   });
@@ -29,16 +29,17 @@ test.describe("Audiophille E-Commerce - Navigation", () => {
   test("✅ should navigate to Speakers category @smoke @positive @ui", async ({
     page,
   }) => {
-    const homePage = new HomePage(page);
-    const categoryPage = new CategoryPage(page);
-    await homePage.navigateToCategory("speakers");
-    await expect(categoryPage.categoryTitle).toContainText("speakers");
-    await expect(categoryPage.categoryTitle).toBeVisible();
-    await expect(categoryPage.firstProduct).toBeVisible();
+    const pm = new PageManager(page);
+    await pm.onHomePage().navigateToCategory("speakers");
+    await expect(pm.onCategoryPage().categoryTitle).toContainText("speakers");
+    await expect(pm.onCategoryPage().categoryTitle).toBeVisible();
+    await expect(pm.onCategoryPage().firstProduct).toBeVisible();
     await expect(
-      categoryPage.firstProduct.getByRole("button", { name: /See Product/i })
+      pm
+        .onCategoryPage()
+        .firstProduct.getByRole("button", { name: /See Product/i })
     ).toBeVisible();
-    await expect(categoryPage.firstProductTitle).toHaveText(
+    await expect(pm.onCategoryPage().firstProductTitle).toHaveText(
       productNames.speakers
     );
   });
@@ -46,37 +47,38 @@ test.describe("Audiophille E-Commerce - Navigation", () => {
   test("✅ should navigate to Earphones category @smoke @positive @ui", async ({
     page,
   }) => {
-    const homePage = new HomePage(page);
-    const categoryPage = new CategoryPage(page);
-    await homePage.navigateToCategory("earphones");
-    await expect(categoryPage.categoryTitle).toContainText("earphones");
-    await expect(categoryPage.categoryTitle).toBeVisible();
-    await expect(categoryPage.firstProduct).toBeVisible();
+    const pm = new PageManager(page);
+    await pm.onHomePage().navigateToCategory("earphones");
+    await expect(pm.onCategoryPage().categoryTitle).toContainText("earphones");
+    await expect(pm.onCategoryPage().categoryTitle).toBeVisible();
+    await expect(pm.onCategoryPage().firstProduct).toBeVisible();
     await expect(
-      categoryPage.firstProduct.getByRole("button", { name: /see product/i })
+      pm
+        .onCategoryPage()
+        .firstProduct.getByRole("button", { name: /see product/i })
     ).toBeVisible();
-    await expect(categoryPage.firstProductTitle).toHaveText(
+    await expect(pm.onCategoryPage().firstProductTitle).toHaveText(
       productNames.earphones
     );
   });
   test("✅ should navigate to Home page when Home link is clicked @positive @ui", async ({
     page,
   }) => {
-    const homePage = new HomePage(page);
-    await homePage.navigateToCategory("headphones");
+    const pm = new PageManager(page);
+    await pm.onHomePage().navigateToCategory("headphones");
     await expect(page).toHaveURL(/.*headphones.*/);
-    await homePage.homeLink.click();
+    await pm.onHomePage().homeLink.click();
     await expect(page).toHaveURL("/audiophille-ecommerce");
-    await expect(homePage.heroSection).toBeVisible();
+    await expect(pm.onHomePage().heroSection).toBeVisible();
   });
   test("✅ should navigate to Home page when logo is clicked @positive @ui", async ({
     page,
   }) => {
-    const homePage = new HomePage(page);
-    await homePage.navigateToCategory("speakers");
+    const pm = new PageManager(page);
+    await pm.onHomePage().navigateToCategory("speakers");
     await expect(page).toHaveURL(/.*speakers.*/);
-    await homePage.logo.click();
+    await pm.onHomePage().logo.click();
     await expect(page).toHaveURL("/audiophille-ecommerce");
-    await expect(homePage.heroSection).toBeVisible();
+    await expect(pm.onHomePage().heroSection).toBeVisible();
   });
 });

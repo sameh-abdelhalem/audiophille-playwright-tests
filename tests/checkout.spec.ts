@@ -1,182 +1,149 @@
 import { test, expect } from "@playwright/test";
-import { HomePage } from "../pages/HomePage";
-import { CategoryPage } from "../pages/CategoryPage";
-import { ProductPage } from "../pages/ProductPage";
-import { CartPage } from "../pages/CartPage";
-import { CheckoutPage } from "../pages/CheckoutPage";
 import { testData } from "../fixtures/testData";
 import { PaymentMethod } from "../fixtures/paymentMethod";
+import { PageManager } from "../pages/pageManager";
 
 test.describe("Checkout Page Tests", () => {
   test.beforeEach(async ({ page }) => {
-    const homePage = new HomePage(page);
-    await homePage.goto();
+    const pm = new PageManager(page);
+    await pm.onHomePage().goto();
   });
 
   test("✅ Loads checkout page from cart @smoke @positive @ui", async ({
     page,
   }) => {
-    const homePage = new HomePage(page);
-    const categoryPage = new CategoryPage(page);
-    const productPage = new ProductPage(page);
-    const cartPage = new CartPage(page);
+    const pm = new PageManager(page);
 
     // Add product and go to checkout
-    await homePage.navigateToCategory("headphones");
-    await categoryPage.firstProductButton.click();
-    await expect(productPage.addToCartButton).toBeVisible();
-    await productPage.addToCartButton.click();
-    await expect(homePage.cartIcon).toBeVisible();
-    await homePage.cartIcon.click();
-    await expect(cartPage.checkoutButton).toBeVisible();
-    await cartPage.checkoutButton.click();
+    await pm.onHomePage().navigateToCategory("headphones");
+    await pm.onCategoryPage().firstProductButton.click();
+    await expect(pm.onProductPage().addToCartButton).toBeVisible();
+    await pm.onProductPage().addToCartButton.click();
+    await expect(pm.onHomePage().cartIcon).toBeVisible();
+    await pm.onHomePage().cartIcon.click();
+    await expect(pm.onCartPage().checkoutButton).toBeVisible();
+    await pm.onCartPage().checkoutButton.click();
     await expect(page).toHaveURL(/.*checkout.*/);
-    const checkoutPage = new CheckoutPage(page);
-    await expect(checkoutPage.checkoutTitle).toBeVisible();
+    await expect(pm.onCheckoutPage().checkoutTitle).toBeVisible();
   });
 
   test("✅ Fill billing details and submit order @positive @regression @ui", async ({
     page,
   }) => {
-    const homePage = new HomePage(page);
-    const categoryPage = new CategoryPage(page);
-    const productPage = new ProductPage(page);
-    const cartPage = new CartPage(page);
+    const pm = new PageManager(page);
 
-    await homePage.navigateToCategory("speakers");
-    await categoryPage.firstProductButton.click();
-    await productPage.addToCartButton.click();
-    await homePage.cartIcon.click();
+    await pm.onHomePage().navigateToCategory("speakers");
+    await pm.onCategoryPage().firstProductButton.click();
+    await pm.onProductPage().addToCartButton.click();
+    await pm.onHomePage().cartIcon.click();
 
     // Wait for checkout button to be enabled before clicking
-    await expect(cartPage.checkoutButton).toBeEnabled();
-    await cartPage.checkoutButton.click();
+    await expect(pm.onCartPage().checkoutButton).toBeEnabled();
+    await pm.onCartPage().checkoutButton.click();
 
-    const checkoutPage = new CheckoutPage(page);
-    await expect(checkoutPage.checkoutTitle).toBeVisible();
-    await checkoutPage.fillBillingDetails(testData.billing.john);
-    await checkoutPage.selectPaymentMethod(PaymentMethod.CashOnDelivery);
-    await checkoutPage.submitOrder();
+    await expect(pm.onCheckoutPage().checkoutTitle).toBeVisible();
+    await expect(pm.onCheckoutPage().checkoutTitle).toBeVisible();
+    await pm.onCheckoutPage().fillBillingDetails(testData.billing.john);
+    await pm.onCheckoutPage().selectPaymentMethod(PaymentMethod.CashOnDelivery);
+    await pm.onCheckoutPage().submitOrder();
 
     // Assert summary or confirmation appears
-    await expect(checkoutPage.summarySection).toBeVisible();
+    await expect(pm.onCheckoutPage().summarySection).toBeVisible();
   });
 
   test("❌ Required fields validation shows error @negative @ui", async ({
     page,
   }) => {
-    const homePage = new HomePage(page);
-    const categoryPage = new CategoryPage(page);
-    const productPage = new ProductPage(page);
-    const cartPage = new CartPage(page);
+    const pm = new PageManager(page);
 
-    await homePage.navigateToCategory("earphones");
-    await categoryPage.firstProductButton.click();
-    await productPage.addToCartButton.click();
-    await homePage.cartIcon.click();
-    await cartPage.checkoutButton.click();
+    await pm.onHomePage().navigateToCategory("earphones");
+    await pm.onCategoryPage().firstProductButton.click();
+    await pm.onProductPage().addToCartButton.click();
+    await pm.onHomePage().cartIcon.click();
+    await pm.onCartPage().checkoutButton.click();
 
-    const checkoutPage = new CheckoutPage(page);
     // Leave fields empty and submit
-    await checkoutPage.submitOrder();
+    await pm.onCheckoutPage().submitOrder();
 
     // Assert error messages are visible
-    await expect(checkoutPage.errorMessages.first()).toBeVisible();
+    await expect(pm.onCheckoutPage().errorMessages.first()).toBeVisible();
   });
 
   test("✅ Select payment method Cash on Delivery @positive @ui", async ({
     page,
   }) => {
-    const homePage = new HomePage(page);
-    const categoryPage = new CategoryPage(page);
-    const productPage = new ProductPage(page);
-    const cartPage = new CartPage(page);
+    const pm = new PageManager(page);
 
-    await homePage.navigateToCategory("headphones");
-    await categoryPage.firstProductButton.click();
-    await productPage.addToCartButton.click();
-    await homePage.cartIcon.click();
-    await cartPage.checkoutButton.click();
+    await pm.onHomePage().navigateToCategory("headphones");
+    await pm.onCategoryPage().firstProductButton.click();
+    await pm.onProductPage().addToCartButton.click();
+    await pm.onHomePage().cartIcon.click();
+    await pm.onCartPage().checkoutButton.click();
 
-    const checkoutPage = new CheckoutPage(page);
-    await checkoutPage.selectPaymentMethod(PaymentMethod.CashOnDelivery);
+    await pm.onCheckoutPage().selectPaymentMethod(PaymentMethod.CashOnDelivery);
     await expect(page.getByLabel("Cash on Delivery")).toBeChecked();
   });
 
   test("✅ Fill e-Money payment details and submit order @positive @regression @ui", async ({
     page,
   }) => {
-    const homePage = new HomePage(page);
-    const categoryPage = new CategoryPage(page);
-    const productPage = new ProductPage(page);
-    const cartPage = new CartPage(page);
+    const pm = new PageManager(page);
 
-    await homePage.navigateToCategory("speakers");
-    await categoryPage.firstProductButton.click();
-    await productPage.addToCartButton.click();
-    await homePage.cartIcon.click();
-    await cartPage.checkoutButton.click();
+    await pm.onHomePage().navigateToCategory("speakers");
+    await pm.onCategoryPage().firstProductButton.click();
+    await pm.onProductPage().addToCartButton.click();
+    await pm.onHomePage().cartIcon.click();
+    await pm.onCartPage().checkoutButton.click();
 
-    const checkoutPage = new CheckoutPage(page);
-    await checkoutPage.selectPaymentMethod(PaymentMethod.EMoney);
-    await checkoutPage.fillBillingDetails(testData.billing.jane);
-    await checkoutPage.submitOrder();
-    await expect(checkoutPage.summarySection).toBeVisible();
+    await pm.onCheckoutPage().selectPaymentMethod(PaymentMethod.EMoney);
+    await pm.onCheckoutPage().fillBillingDetails(testData.billing.jane);
+    await pm.onCheckoutPage().submitOrder();
+    await expect(pm.onCheckoutPage().summarySection).toBeVisible();
   });
 
   test("❌ e-Money payment fields required validation @negative @ui", async ({
     page,
   }) => {
-    const homePage = new HomePage(page);
-    const categoryPage = new CategoryPage(page);
-    const productPage = new ProductPage(page);
-    const cartPage = new CartPage(page);
+    const pm = new PageManager(page);
 
-    await homePage.navigateToCategory("speakers");
-    await categoryPage.firstProductButton.click();
-    await productPage.addToCartButton.click();
-    await homePage.cartIcon.click();
-    await cartPage.checkoutButton.click();
+    await pm.onHomePage().navigateToCategory("speakers");
+    await pm.onCategoryPage().firstProductButton.click();
+    await pm.onProductPage().addToCartButton.click();
+    await pm.onHomePage().cartIcon.click();
+    await pm.onCartPage().checkoutButton.click();
 
-    const checkoutPage = new CheckoutPage(page);
-    await checkoutPage.selectPaymentMethod(PaymentMethod.EMoney);
-    await checkoutPage.fillBillingDetails(
+    await pm.onCheckoutPage().selectPaymentMethod(PaymentMethod.EMoney);
+    await pm.onCheckoutPage().fillBillingDetails(
       // eMoneyNumber and eMoneyPin intentionally omitted
       testData.billing.janeWithoutEMoney
     );
-    await checkoutPage.submitOrder();
-    await expect(
-      checkoutPage.errorMessages.getByText("please type your enum")
-    ).toBeVisible();
+    await pm.onCheckoutPage().submitOrder();
+    await expect(pm.onCheckoutPage().errorMessages.getByText("please type your enum")).toBeVisible();
   });
 
   test("✅ Checkout confirmation popup appears and is correct @positive @regression @ui", async ({
     page,
   }) => {
-    const homePage = new HomePage(page);
-    const categoryPage = new CategoryPage(page);
-    const productPage = new ProductPage(page);
-    const cartPage = new CartPage(page);
+    const pm = new PageManager(page);
 
-    await homePage.navigateToCategory("speakers");
-    await categoryPage.firstProductButton.click();
-    await productPage.addToCartButton.click();
-    await homePage.cartIcon.click();
-    await cartPage.checkoutButton.click();
+    await pm.onHomePage().navigateToCategory("speakers");
+    await pm.onCategoryPage().firstProductButton.click();
+    await pm.onProductPage().addToCartButton.click();
+    await pm.onHomePage().cartIcon.click();
+    await pm.onCartPage().checkoutButton.click();
 
-    const checkoutPage = new CheckoutPage(page);
-    await checkoutPage.fillBillingDetails(testData.billing.john);
-    await checkoutPage.selectPaymentMethod(PaymentMethod.CashOnDelivery);
-    await checkoutPage.submitOrder();
+    await pm.onCheckoutPage().fillBillingDetails(testData.billing.john);
+    await pm.onCheckoutPage().selectPaymentMethod(PaymentMethod.CashOnDelivery);
+    await pm.onCheckoutPage().submitOrder();
 
     // Validate confirmation popup
-    await expect(checkoutPage.confirmationPopup).toBeVisible();
-    await expect(checkoutPage.confirmationTitle).toBeVisible();
-    await expect(checkoutPage.confirmationOrderSummary).toBeVisible();
-    await expect(checkoutPage.confirmationGrandTotal).toBeVisible();
-    await expect(checkoutPage.confirmationBackHomeButton).toBeVisible();
-    await expect(checkoutPage.confirmationBackHomeButton).toBeEnabled();
-    await checkoutPage.confirmationBackHomeButton.click();
+    await expect(pm.onCheckoutPage().confirmationPopup).toBeVisible();
+    await expect(pm.onCheckoutPage().confirmationTitle).toBeVisible();
+    await expect(pm.onCheckoutPage().confirmationOrderSummary).toBeVisible();
+    await expect(pm.onCheckoutPage().confirmationGrandTotal).toBeVisible();
+    await expect(pm.onCheckoutPage().confirmationBackHomeButton).toBeVisible();
+    await expect(pm.onCheckoutPage().confirmationBackHomeButton).toBeEnabled();
+    await pm.onCheckoutPage().confirmationBackHomeButton.click();
     await expect(page).toHaveURL("/audiophille-ecommerce");
   });
 });
