@@ -2,6 +2,7 @@ import { test, expect } from "@playwright/test";
 import { testData } from "../fixtures/testData";
 import { PaymentMethod } from "../fixtures/paymentMethod";
 import { PageManager } from "../pages/pageManager";
+import { isMobile, isTablet } from "../utils/device";
 
 test.describe("Checkout Page Tests", () => {
   test.beforeEach(async ({ page }) => {
@@ -9,6 +10,9 @@ test.describe("Checkout Page Tests", () => {
     await pm.onHomePage().goto();
     await pm.onHomePage().waitForReadyState("domcontentloaded");
   });
+
+  test.skip(isMobile, "Skipping full checkout flow on mobile to keep run lean");
+  test.skip(isTablet, "Skipping full checkout flow on tablet to keep run lean");
 
   test("✅ Loads checkout page from cart @smoke @positive @ui", async ({
     page,

@@ -35,10 +35,6 @@ export class ProductPage extends BasePage {
       .nth(1);
   }
 
-  async addToCart() {
-    await this.addToCartButton.click();
-  }
-
   async getQuantityValue() {
     return Number(await this.quantityValue.textContent());
   }

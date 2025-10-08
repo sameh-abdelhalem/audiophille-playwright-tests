@@ -1,4 +1,4 @@
-import { Page, Locator } from "@playwright/test";
+import { Page } from "@playwright/test";
 
 export class BasePage {
   protected page: Page;
@@ -11,20 +11,12 @@ export class BasePage {
     await this.page.goto(`audiophille-ecommerce${path}`);
   }
 
-  async getTitle() {
-    return this.page.title();
-  }
-
   async navigateToCategory(category: "headphones" | "speakers" | "earphones") {
     await this.clickByText(category);
   }
 
   async clickByText(text: string) {
     await this.page.locator("header").getByRole("link", { name: text }).click();
-  }
-
-  getByRole(role: string, options?: Record<string, any>): Locator {
-    return this.page.getByRole(role as any, options);
   }
 
   async waitForUrl(urlPart: string) {

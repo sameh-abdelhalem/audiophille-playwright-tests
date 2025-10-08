@@ -12,7 +12,9 @@ export class HomePage extends BasePage {
   readonly categoryCards: Locator;
   readonly cartIcon: Locator;
   readonly footer: Locator;
-
+  readonly resHamburgerMenu: Locator;
+  readonly resHeadphonesLink: Locator;
+  readonly resSpeakersLink: Locator;
   constructor(page: Page) {
     super(page);
     this.logo = page
@@ -37,5 +39,10 @@ export class HomePage extends BasePage {
       .locator("a");
     this.cartIcon = page.locator("svg.fa-cart-shopping");
     this.footer = page.locator(".Footer_footerContainer__oq9TB");
+    this.resHamburgerMenu = page.locator(".dropdown-toggle");
+    this.resHeadphonesLink = page
+      .getByRole("link", { name: "HEADPHONES" })
+      .first();
+    this.resSpeakersLink = page.getByRole("link", { name: "SPEAKERS" }).first();
   }
 }

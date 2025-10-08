@@ -1,7 +1,6 @@
 import { Page, Locator } from "@playwright/test";
 import { BasePage } from "./BasePage";
 import { PaymentMethod } from "../fixtures/paymentMethod";
-import { parsePrice } from "../utils/price";
 
 export class CheckoutPage extends BasePage {
   readonly checkoutTitle: Locator;
@@ -12,7 +11,6 @@ export class CheckoutPage extends BasePage {
   readonly zipInput: Locator;
   readonly cityInput: Locator;
   readonly countryInput: Locator;
-  readonly paymentRadio: Locator;
   readonly continueButton: Locator;
   readonly summarySection: Locator;
   readonly errorMessages: Locator;
@@ -39,7 +37,6 @@ export class CheckoutPage extends BasePage {
     this.zipInput = page.getByLabel("ZIP Code");
     this.cityInput = page.getByLabel("City").first();
     this.countryInput = page.getByLabel("Country");
-    this.paymentRadio = page.locator('input[type="radio"]');
     this.continueButton = page.getByRole("button", { name: /continue/i });
     this.summarySection = page.locator(".CheckoutSummary_container__z6thj");
     this.errorMessages = page.locator(".CheckoutForm_error__s-BpP");
@@ -92,11 +89,6 @@ export class CheckoutPage extends BasePage {
 
   async selectPaymentMethod(method: PaymentMethod) {
     await this.page.getByLabel(method).check();
-  }
-
-  async getGrandTotalValue() {
-    const raw = await this.confirmationGrandTotal.textContent();
-    return parsePrice(raw);
   }
 
   async submitOrder() {
