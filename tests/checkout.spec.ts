@@ -11,9 +11,6 @@ test.describe("Checkout Page Tests", () => {
     await pm.onHomePage().waitForReadyState("domcontentloaded");
   });
 
-  test.skip(isMobile, "Skipping full checkout flow on mobile to keep run lean");
-  test.skip(isTablet, "Skipping full checkout flow on tablet to keep run lean");
-
   test("✅ Loads checkout page from cart @smoke @positive @ui", async ({
     page,
   }) => {

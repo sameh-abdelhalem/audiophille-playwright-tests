@@ -9,6 +9,7 @@ https://sameh-abdelhalem.github.io/audiophille-ecommerce/
 - Page Object Model + PageManager
 - Cross browser (Chromium / Firefox / WebKit)
 - Cart, product, checkout (incl. e‑Money) coverage
+- Responsive smoke coverage (mobile + tablet projects) via `responsive.spec.ts`
 - Tags: @smoke @ui @positive @negative @regression
 - Utilities: parsePrice, PaymentMethod enum
 
@@ -16,9 +17,9 @@ https://sameh-abdelhalem.github.io/audiophille-ecommerce/
 
 ```
 pages/        page objects
-tests/        spec files
+tests/        spec files (includes responsive.spec.ts)
 fixtures/     test data + enums
-utils/        helpers (price)
+utils/        helpers (price, device form-factor helpers)
 playwright.config.ts
 ```
 
@@ -42,6 +43,46 @@ Headed:
 npx playwright test --headed --project=chromium
 ```
 
+## Responsive Layer
+
+Supported additional projects (configured in `playwright.config.ts`):
+
+- `mobile-chromium-pixel7`
+- `mobile-webkit-iphone14`
+- `tablet-chromium-ipad`
+
+Only `responsive.spec.ts` runs under these projects (scoped with `testMatch`) to keep the matrix fast.
+
+Run full desktop regression (all standard specs):
+
+```bash
+npx playwright test
+```
+
+Run only responsive smoke (all responsive projects, just the responsive spec):
+
+```bash
+npx playwright test --project=mobile-chromium-pixel7
+npx playwright test --project=mobile-webkit-iphone14
+npx playwright test --project=tablet-chromium-ipad
+```
+
+Run a single responsive test across all responsive projects:
+
+```bash
+npx playwright test responsive.spec.ts
+```
+
+Tag strategy:
+
+- Core specs use existing tags (@smoke, @ui, etc.)
+- Responsive spec additionally implies layout validation; add `@responsive` if later filtering is desired.
+
+Extending responsive:
+
+- Add new device: append a project with `testMatch: "responsive.spec.ts"`.
+- Promote a desktop test to responsive: copy critical assertion into `responsive.spec.ts` (keep it lean).
+
 ## Common Tags
 
 | Tag         | Use                |
@@ -60,11 +101,12 @@ npx playwright test --headed --project=chromium
 
 ## Utilities
 
-| Utility / Enum       | Purpose                               |
-| -------------------- | ------------------------------------- |
-| `parsePrice(text)`   | Strips currency / formatting → number |
-| `PaymentMethod` enum | Avoids repeating payment strings      |
-| `PageManager`        | Central page accessor factory         |
+| Utility / Enum              | Purpose                                |
+| --------------------------- | -------------------------------------- |
+| `parsePrice(text)`          | Strips currency / formatting → number  |
+| `PaymentMethod` enum        | Avoids repeating payment strings       |
+| `PageManager`               | Central page accessor factory          |
+| `isMobile()` / `isTablet()` | Form factor guards in responsive tests |
 
 ## Flakiness Mitigation
 
@@ -75,10 +117,10 @@ npx playwright test --headed --project=chromium
 
 ## Future Ideas
 
-- Accessibility scan (axe-core)
-- API + contract tests
-- Mobile viewport matrix
-- Visual diff workflow (could be added later)
+Add:
+
+- Full checkout happy path on one mobile device
+- Visual regression only on `mobile-chromium-pixel7`
 
 ## Contact
 
@@ -218,31 +260,6 @@ Typical GitHub Actions steps:
 - Accessibility smoke (axe-core)
 - API layer + contract validation
 - Visual diff gating in PR workflow
-- Data builder for negative billing cases
-- Mobile viewport matrix
-
----
-
-## 🤝 Contributing (Portfolio Context)
-
-This is a personal showcase project. Suggestions / forks welcome.
-
----
-
-## 📜 License
-
-MIT (Feel free to reuse framework patterns.)
-
----
-
-## 🙋 Contact
-
-Reach out via GitHub profile: https://github.com/sameh-abdelhalem
-
----
-
-Happy Testing! 🚀
-
 - Data builder for negative billing cases
 - Mobile viewport matrix
 
