@@ -10,7 +10,6 @@ https://sameh-abdelhalem.github.io/audiophille-ecommerce/
 - Cross browser (Chromium / Firefox / WebKit)
 - Cart, product, checkout (incl. e‑Money) coverage
 - Tags: @smoke @ui @positive @negative @regression
-- Optional visual snapshots (Argos) gated by VISUAL env
 - Utilities: parsePrice, PaymentMethod enum
 
 ## Structure
@@ -19,7 +18,7 @@ https://sameh-abdelhalem.github.io/audiophille-ecommerce/
 pages/        page objects
 tests/        spec files
 fixtures/     test data + enums
-utils/        helpers (price, visual)
+utils/        helpers (price)
 playwright.config.ts
 ```
 
@@ -43,14 +42,6 @@ Headed:
 npx playwright test --headed --project=chromium
 ```
 
-## Visual Mode (optional)
-
-```bash
-VISUAL=1 npx playwright test
-```
-
-(Chromium only, uploads Argos screenshots.)
-
 ## Common Tags
 
 | Tag         | Use                |
@@ -67,19 +58,27 @@ VISUAL=1 npx playwright test
 - Cart (add, multi-item, quantity, pricing, persistence)
 - Checkout (billing, payment selection, e‑Money validation, confirmation modal)
 
+## Utilities
+
+| Utility / Enum       | Purpose                               |
+| -------------------- | ------------------------------------- |
+| `parsePrice(text)`   | Strips currency / formatting → number |
+| `PaymentMethod` enum | Avoids repeating payment strings      |
+| `PageManager`        | Central page accessor factory         |
+
 ## Flakiness Mitigation
 
 - waitForReadyState
 - cartPage.waitForReady
 - openFirstProduct helper
-- Minimal explicit waits; prefer expect(...).toBeVisible()
+- Prefer expect(...).toBeVisible() over manual timeouts
 
 ## Future Ideas
 
 - Accessibility scan (axe-core)
 - API + contract tests
 - Mobile viewport matrix
-- Visual diffs in PR workflow
+- Visual diff workflow (could be added later)
 
 ## Contact
 
@@ -112,28 +111,6 @@ npx playwright test -g "Checkout confirmation"
 
 ---
 
-## 🖼 Visual Snapshot Mode (Optional)
-
-Visual snapshots are disabled by default for speed.  
-Enable only when needed:
-
-```bash
-VISUAL=1 npx playwright test
-```
-
-In `VISUAL=1`:
-
-- Only Chromium project runs (faster)
-- Argos reporter is enabled
-- Calls to `captureVisual(page, "Name")` actually upload screenshots
-
-Without `VISUAL`:
-
-- `captureVisual` is a no‑op
-- No Argos overhead
-
----
-
 ## 🔐 Checkout Coverage Highlights
 
 - Billing form required fields
@@ -160,7 +137,6 @@ Without `VISUAL`:
 | -------------------- | --------------------------------------- |
 | `parsePrice(text)`   | Strips currency / formatting → number   |
 | `PaymentMethod` enum | Eliminates string literals in tests     |
-| `captureVisual()`    | Conditional Argos wrapper               |
 | `PageManager`        | Central page accessor (avoids new spam) |
 
 ---
@@ -242,6 +218,31 @@ Typical GitHub Actions steps:
 - Accessibility smoke (axe-core)
 - API layer + contract validation
 - Visual diff gating in PR workflow
+- Data builder for negative billing cases
+- Mobile viewport matrix
+
+---
+
+## 🤝 Contributing (Portfolio Context)
+
+This is a personal showcase project. Suggestions / forks welcome.
+
+---
+
+## 📜 License
+
+MIT (Feel free to reuse framework patterns.)
+
+---
+
+## 🙋 Contact
+
+Reach out via GitHub profile: https://github.com/sameh-abdelhalem
+
+---
+
+Happy Testing! 🚀
+
 - Data builder for negative billing cases
 - Mobile viewport matrix
 
