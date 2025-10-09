@@ -25,7 +25,7 @@ test.describe("Cart Page Tests", () => {
     await pm.onProductPage().addToCartButton.click();
 
     // wait for item count to update
-    await expect(pm.onHomePage().cartItemCount).toContainText("1");
+    await expect(pm.onHomePage().cartItemCount).toHaveText("1");
 
     await pm.onHomePage().cartIcon.click(); // navigate to cart
     await pm.onCartPage().waitForReady();
@@ -43,14 +43,14 @@ test.describe("Cart Page Tests", () => {
     await pm.onHomePage().waitForReadyState("domcontentloaded");
     await pm.onCategoryPage().openFirstProduct();
     await pm.onProductPage().addToCartButton.click();
-    await expect(pm.onHomePage().cartItemCount).toContainText("1");
+    await expect(pm.onHomePage().cartItemCount).toHaveText("1");
 
     // Add second item (navigate to speakers)
     await pm.onHomePage().speakersLink.click();
     await pm.onHomePage().waitForReadyState("domcontentloaded");
     await pm.onCategoryPage().openFirstProduct();
     await pm.onProductPage().addToCartButton.click();
-    await expect(pm.onHomePage().cartItemCount).toContainText("2");
+    await expect(pm.onHomePage().cartItemCount).toHaveText("2");
 
     await pm.onHomePage().cartIcon.click();
     await pm.onCartPage().waitForReady();
@@ -69,7 +69,7 @@ test.describe("Cart Page Tests", () => {
     await pm.onCategoryPage().openFirstProduct();
     await pm.onProductPage().addToCartButton.click();
 
-    await expect(pm.onHomePage().cartItemCount).toContainText("1");
+    await expect(pm.onHomePage().cartItemCount).toHaveText("1");
     await pm.onHomePage().cartIcon.click();
     await pm.onCartPage().waitForReady();
     await expect(pm.onCartPage().checkoutButton).toBeEnabled();
@@ -88,12 +88,12 @@ test.describe("Cart Page Tests", () => {
     await pm.onHomePage().headphonesLink.click();
     await pm.onCategoryPage().openFirstProduct();
     await pm.onProductPage().addToCartButton.click();
-    await expect(pm.onHomePage().cartItemCount).toContainText("1");
+    await expect(pm.onHomePage().cartItemCount).toHaveText("1");
 
     // Navigate away
     await pm.onHomePage().speakersLink.click();
     await pm.onCategoryPage().waitForFirstProduct();
-    await expect(pm.onCategoryPage().categoryTitle).toContainText("speakers");
+    await expect(pm.onCategoryPage().categoryTitle).toHaveText("speakers");
 
     // Return to cart
     await pm.onHomePage().cartIcon.click();
@@ -150,7 +150,7 @@ test.describe("Cart Page Tests", () => {
     await pm.onHomePage().headphonesLink.click();
     await pm.onCategoryPage().openFirstProduct();
     await pm.onProductPage().addToCartButton.click();
-    await expect(pm.onHomePage().cartItemCount).toContainText("1");
+    await expect(pm.onHomePage().cartItemCount).toHaveText("1");
     await pm.onHomePage().cartIcon.click();
     await pm.onCartPage().waitForReady();
 
@@ -231,11 +231,11 @@ test.describe("Cart Page Tests", () => {
     await pm.onCategoryPage().openFirstProduct();
     await pm.onProductPage().addToCartButton.click();
 
-    await expect(pm.onHomePage().cartItemCount).toContainText("1");
+    await expect(pm.onHomePage().cartItemCount).toHaveText("1");
     await pm.onHomePage().speakersLink.click();
     await pm.onCategoryPage().openFirstProduct();
     await pm.onProductPage().addToCartButton.click();
-    await expect(pm.onHomePage().cartItemCount).toContainText("2");
+    await expect(pm.onHomePage().cartItemCount).toHaveText("2");
 
     await pm.onHomePage().cartIcon.click();
     await pm.onCartPage().waitForReady();
@@ -288,7 +288,7 @@ test.describe("Cart Page Tests", () => {
     await pm.onProductPage().plusButton.click();
     await expect(await pm.onProductPage().getQuantityValue()).toBe(2);
     await pm.onProductPage().addToCartButton.click();
-    await expect(pm.onHomePage().cartItemCount).toContainText("2");
+    await expect(pm.onHomePage().cartItemCount).toHaveText("2");
 
     // Add 3 speakers at once
     await pm.onHomePage().speakersLink.click();
@@ -300,7 +300,7 @@ test.describe("Cart Page Tests", () => {
     await pm.onProductPage().plusButton.click();
     await expect(await pm.onProductPage().getQuantityValue()).toBe(3);
     await pm.onProductPage().addToCartButton.click();
-    await expect(pm.onHomePage().cartItemCount).toContainText("5");
+    await expect(pm.onHomePage().cartItemCount).toHaveText("5");
     await expect(pm.onHomePage().cartIcon).toBeVisible();
 
     await pm.onHomePage().cartIcon.click();

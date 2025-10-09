@@ -22,7 +22,7 @@ test.describe("Checkout Page Tests", () => {
     await pm.onCategoryPage().firstProductButton.click();
     await expect(pm.onProductPage().addToCartButton).toBeVisible();
     await pm.onProductPage().addToCartButton.click();
-    await expect(pm.onHomePage().cartItemCount).toContainText("1");
+    await expect(pm.onHomePage().cartItemCount).toHaveText("1");
     await pm.onHomePage().cartIcon.click();
     await expect(pm.onCartPage().checkoutButton).toBeVisible();
     await pm.onCartPage().checkoutButton.click();
@@ -38,7 +38,7 @@ test.describe("Checkout Page Tests", () => {
     await pm.onHomePage().waitForReadyState("domcontentloaded");
     await pm.onCategoryPage().firstProductButton.click();
     await pm.onProductPage().addToCartButton.click();
-    await expect(pm.onHomePage().cartItemCount).toContainText("1");
+    await expect(pm.onHomePage().cartItemCount).toHaveText("1");
     await pm.onHomePage().cartIcon.click();
 
     // Wait for checkout button to be enabled before clicking
@@ -63,7 +63,7 @@ test.describe("Checkout Page Tests", () => {
     await pm.onHomePage().waitForReadyState("domcontentloaded");
     await pm.onCategoryPage().firstProductButton.click();
     await pm.onProductPage().addToCartButton.click();
-    await expect(pm.onHomePage().cartItemCount).toContainText("1");
+    await expect(pm.onHomePage().cartItemCount).toHaveText("1");
     await pm.onHomePage().cartIcon.click();
     await pm.onCartPage().checkoutButton.click();
 
@@ -136,7 +136,7 @@ test.describe("Checkout Page Tests", () => {
     await pm.onHomePage().waitForReadyState("domcontentloaded");
     await pm.onCategoryPage().firstProductButton.click();
     await pm.onProductPage().addToCartButton.click();
-    await expect(pm.onHomePage().cartItemCount).toContainText("1");
+    await expect(pm.onHomePage().cartItemCount).toHaveText("1");
     await pm.onHomePage().cartIcon.click();
     await pm.onCartPage().checkoutButton.click();
 

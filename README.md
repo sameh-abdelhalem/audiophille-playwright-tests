@@ -43,6 +43,54 @@ Headed:
 npx playwright test --headed --project=chromium
 ```
 
+## Allure Reports
+
+Allure reporter is enabled in playwright.config.ts.
+
+- Install (if not already):
+
+```bash
+npm i -D allure-playwright allure-commandline
+```
+
+- Run tests (produces ./allure-results):
+
+```bash
+npx playwright test
+```
+
+- Generate HTML report:
+
+```bash
+npx allure generate ./allure-results --clean -o ./allure-report
+```
+
+- Open report locally:
+
+```bash
+npx allure open ./allure-report
+# or
+npx allure serve ./allure-results
+```
+
+Optional package.json scripts:
+
+```json
+{
+  "scripts": {
+    "test": "playwright test",
+    "allure:gen": "allure generate ./allure-results --clean -o ./allure-report",
+    "allure:open": "allure open ./allure-report",
+    "allure:serve": "allure serve ./allure-results"
+  }
+}
+```
+
+CI tips:
+
+- Upload ./allure-report as an artifact, or host via GitHub Pages.
+- Ensure the job runs `npx playwright test` before `npx allure generate`.
+
 ## Responsive Layer
 
 Supported additional projects (configured in `playwright.config.ts`):
