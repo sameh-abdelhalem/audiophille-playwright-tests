@@ -1,0 +1,128 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - generic [ref=e4]:
+    - banner [ref=e5]:
+      - navigation [ref=e7]:
+        - list [ref=e8]:
+          - listitem [ref=e9]:
+            - link "HOME" [ref=e10]:
+              - /url: /audiophille-ecommerce
+          - listitem [ref=e11]:
+            - link "HEADPHONES" [ref=e12]:
+              - /url: /audiophille-ecommerce/headphones
+          - listitem [ref=e13]:
+            - link "SPEAKERS" [ref=e14]:
+              - /url: /audiophille-ecommerce/speakers
+          - listitem [ref=e15]:
+            - link "EARPHONES" [ref=e16]:
+              - /url: /audiophille-ecommerce/earphones
+      - generic [ref=e17]:
+        - img [ref=e18] [cursor=pointer]
+        - text: "1"
+    - generic [ref=e21]:
+      - generic [ref=e22]:
+        - heading "CART ( 1)" [level=6] [ref=e23]
+        - paragraph [ref=e24] [cursor=pointer]: Remove all
+      - generic [ref=e25]:
+        - generic [ref=e27]:
+          - paragraph [ref=e28]: XX59 Headphones
+          - paragraph [ref=e29]: $ 899
+        - generic [ref=e31]:
+          - generic [ref=e32] [cursor=pointer]: "-"
+          - generic [ref=e33]: "1"
+          - generic [ref=e34] [cursor=pointer]: +
+      - generic [ref=e35]:
+        - generic [ref=e36]:
+          - paragraph [ref=e37]: TOTAL
+          - heading "$ 899" [level=6] [ref=e38]
+        - button "CHECKOUT" [ref=e39] [cursor=pointer]
+  - main [ref=e40]:
+    - generic [ref=e41]:
+      - link "Go Back" [ref=e42]:
+        - /url: /audiophille-ecommerce
+      - generic [ref=e46]:
+        - heading "XX59 Headphones" [level=2] [ref=e47]
+        - paragraph [ref=e48]: Enjoy your audio almost anywhere and customize it to your specific tastes with the XX59 headphones. The stylish yet durable versatile wireless headset is a brilliant companion at home or on the move.
+        - paragraph [ref=e49]: $ 899
+        - generic [ref=e50]:
+          - generic [ref=e51]:
+            - generic [ref=e52] [cursor=pointer]: "-"
+            - generic [ref=e53]: "1"
+            - generic [ref=e54] [cursor=pointer]: +
+          - button "ADD TO CART" [ref=e55] [cursor=pointer]
+      - generic:
+        - generic: ‌
+      - generic [ref=e56]:
+        - generic [ref=e57]:
+          - heading "Features" [level=3] [ref=e58]
+          - paragraph [ref=e59]: These headphones have been created from durable, high-quality materials tough enough to take anywhere. Its compact folding design fuses comfort and minimalist style making it perfect for travel. Flawless transmission is assured by the latest wireless technology engineered for audio synchronization with videos. More than a simple pair of headphones, this headset features a pair of built-in microphones for clear, hands-free calling when paired with a compatible smartphone. Controlling music and calls is also intuitive thanks to easy-access touch buttons on the earcups. Regardless of how you use the XX59 headphones, you can do so all day thanks to an impressive 30-hour battery life that can be rapidly recharged via USB-C.
+        - generic [ref=e60]:
+          - heading "in the box" [level=3] [ref=e61]
+          - list [ref=e62]:
+            - listitem [ref=e63]:
+              - generic [ref=e64]: 1x
+              - text: Headphone unit
+            - listitem [ref=e65]:
+              - generic [ref=e66]: 2x
+              - text: Replacement earcups
+            - listitem [ref=e67]:
+              - generic [ref=e68]: 1x
+              - text: User manual
+            - listitem [ref=e69]:
+              - generic [ref=e70]: 1x
+              - text: 3.5mm 5m audio cable
+      - heading "you may also like" [level=4] [ref=e74]
+      - generic [ref=e75]:
+        - generic [ref=e76]:
+          - img [ref=e77]
+          - heading "XX59 Headphones" [level=5] [ref=e78]
+          - button "SEE PRODDUCT" [ref=e79] [cursor=pointer]
+        - generic [ref=e80]:
+          - img [ref=e81]
+          - heading "XX99 Mark I Headphones" [level=5] [ref=e82]
+          - button "SEE PRODDUCT" [ref=e83] [cursor=pointer]
+        - generic [ref=e84]:
+          - img [ref=e85]
+          - heading "ZX7 Speaker" [level=5] [ref=e86]
+          - button "SEE PRODDUCT" [ref=e87] [cursor=pointer]
+      - generic [ref=e88]:
+        - link "Headphones Shop" [ref=e90]:
+          - /url: /audiophille-ecommerce/headphones
+          - img [ref=e91]
+          - heading "Headphones" [level=6] [ref=e92]
+          - generic [ref=e93]: Shop
+        - link "Speakers Shop" [ref=e95]:
+          - /url: /audiophille-ecommerce/speakers
+          - heading "Speakers" [level=6] [ref=e96]
+          - generic [ref=e97]: Shop
+        - link "Earphones Shop" [ref=e99]:
+          - /url: /audiophille-ecommerce/earphones
+          - heading "Earphones" [level=6] [ref=e100]
+          - generic [ref=e101]: Shop
+      - generic [ref=e103]:
+        - heading "Bringing you the best audio gear" [level=2] [ref=e104]:
+          - text: Bringing you the
+          - generic [ref=e105]: best
+          - text: audio gear
+        - paragraph [ref=e106]: Located at the heart of New York City, Audiophile is the premier store for high end headphones, earphones, speakers, and audio accessories. We have a large showroom and luxury demonstration rooms available for you to browse and experience a wide range of our products. Stop by our store to meet some of the fantastic people who make Audiophile the best place to buy your portable audio equipment.
+  - generic [ref=e107]:
+    - generic [ref=e108]:
+      - paragraph [ref=e109]: Audiophile is an all in one stop to fulfill your audio needs. We're a small team of music lovers and sound specialists who are devoted to helping you get the most out of personal audio. Come and visit our demo facility - we’re open 7 days a week.
+      - paragraph [ref=e110]: Copyright 2021. All Rights Reserved
+    - navigation [ref=e112]:
+      - list [ref=e113]:
+        - listitem [ref=e114]:
+          - link "HOME" [ref=e115]:
+            - /url: /audiophille-ecommerce
+        - listitem [ref=e116]:
+          - link "HEADPHONES" [ref=e117]:
+            - /url: /audiophille-ecommerce/headphones
+        - listitem [ref=e118]:
+          - link "SPEAKERS" [ref=e119]:
+            - /url: /audiophille-ecommerce/speakers
+        - listitem [ref=e120]:
+          - link "EARPHONES" [ref=e121]:
+            - /url: /audiophille-ecommerce/earphones
+```

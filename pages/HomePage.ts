@@ -15,6 +15,7 @@ export class HomePage extends BasePage {
   readonly resHamburgerMenu: Locator;
   readonly resHeadphonesLink: Locator;
   readonly resSpeakersLink: Locator;
+  readonly cartItemCount: Locator;
   constructor(page: Page) {
     super(page);
     this.logo = page
@@ -44,5 +45,6 @@ export class HomePage extends BasePage {
       .getByRole("link", { name: "HEADPHONES" })
       .first();
     this.resSpeakersLink = page.getByRole("link", { name: "SPEAKERS" }).first();
+    this.cartItemCount = this.cartIcon.locator("..");
   }
 }
