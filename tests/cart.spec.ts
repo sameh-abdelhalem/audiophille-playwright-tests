@@ -43,15 +43,14 @@ test.describe("Cart Page Tests", () => {
     await pm.onHomePage().waitForReadyState("domcontentloaded");
     await pm.onCategoryPage().openFirstProduct();
     await pm.onProductPage().addToCartButton.click();
-    // Wait for cart to update
-    await expect(pm.onHomePage().cartIcon).toBeVisible();
+    await expect(pm.onHomePage().cartItemCount).toContainText("1");
 
     // Add second item (navigate to speakers)
     await pm.onHomePage().speakersLink.click();
     await pm.onHomePage().waitForReadyState("domcontentloaded");
     await pm.onCategoryPage().openFirstProduct();
     await pm.onProductPage().addToCartButton.click();
-    await expect(pm.onHomePage().cartIcon).toBeVisible();
+    await expect(pm.onHomePage().cartItemCount).toContainText("2");
 
     await pm.onHomePage().cartIcon.click();
     await pm.onCartPage().waitForReady();

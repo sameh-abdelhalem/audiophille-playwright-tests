@@ -63,6 +63,7 @@ test.describe("Checkout Page Tests", () => {
     await pm.onHomePage().waitForReadyState("domcontentloaded");
     await pm.onCategoryPage().firstProductButton.click();
     await pm.onProductPage().addToCartButton.click();
+    await expect(pm.onHomePage().cartItemCount).toContainText("1");
     await pm.onHomePage().cartIcon.click();
     await pm.onCartPage().checkoutButton.click();
 
@@ -135,6 +136,7 @@ test.describe("Checkout Page Tests", () => {
     await pm.onHomePage().waitForReadyState("domcontentloaded");
     await pm.onCategoryPage().firstProductButton.click();
     await pm.onProductPage().addToCartButton.click();
+    await expect(pm.onHomePage().cartItemCount).toContainText("1");
     await pm.onHomePage().cartIcon.click();
     await pm.onCartPage().checkoutButton.click();
 
